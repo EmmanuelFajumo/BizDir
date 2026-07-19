@@ -1,0 +1,914 @@
+/* ================================================================
+   BizDir - Business Owner Dashboard Styles
+   Colors: #447604, #47624F
+   Author: BizDir Team
+   Version: 1.0.0
+   ================================================================ */
+
+/* ================================================================
+   1. CSS VARIABLES
+   ================================================================ */
+:root {
+    --biz-sidebar-width: 260px;
+    --biz-header-height: 70px;
+
+    /* Primary Colors */
+    --biz-primary: #447604;
+    --biz-primary-dark: #3a6303;
+    --biz-primary-light: #edf5e6;
+
+    /* Secondary Colors */
+    --biz-secondary: #47624F;
+    --biz-secondary-dark: #3a5141;
+    --biz-secondary-light: #eaf0ec;
+
+    /* Utility Colors */
+    --biz-success: #198754;
+    --biz-success-light: #e6f7ee;
+    --biz-warning: #FFC107;
+    --biz-warning-light: #fff8e1;
+    --biz-danger: #DC3545;
+    --biz-danger-light: #fce4e6;
+    --biz-info: #0DCAF0;
+
+    /* Grays */
+    --biz-dark: #1e293b;
+    --biz-gray-50: #f8fafc;
+    --biz-gray-100: #f1f5f9;
+    --biz-gray-200: #e2e8f0;
+    --biz-gray-300: #cbd5e1;
+    --biz-gray-400: #94a3b8;
+    --biz-gray-500: #64748b;
+    --biz-gray-600: #475569;
+    --biz-gray-700: #334155;
+
+    /* Misc */
+    --biz-radius: 16px;
+    --biz-radius-sm: 10px;
+    --biz-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --biz-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --biz-shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+    --biz-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ================================================================
+   2. DASHBOARD LAYOUT
+   ================================================================ */
+.biz-owner-body {
+    background-color: var(--biz-gray-50);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.biz-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--biz-sidebar-width);
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid var(--biz-gray-200);
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+    transition: var(--biz-transition);
+}
+
+.biz-sidebar .biz-sidebar-brand {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--biz-gray-200);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--biz-dark);
+    text-decoration: none;
+    min-height: var(--biz-header-height);
+}
+
+.biz-sidebar .biz-sidebar-brand i {
+    color: var(--biz-primary);
+    font-size: 1.5rem;
+}
+
+.biz-sidebar .biz-sidebar-brand .biz-badge {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: var(--biz-secondary);
+    color: #ffffff;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    margin-left: auto;
+}
+
+/* Sidebar Navigation */
+.biz-sidebar-nav {
+    flex: 1;
+    padding: 1rem 0.75rem;
+    overflow-y: auto;
+}
+
+.biz-sidebar-nav .biz-nav-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--biz-gray-400);
+    padding: 0.75rem 0.75rem 0.5rem;
+}
+
+.biz-sidebar-nav .biz-nav-item {
+    margin-bottom: 2px;
+}
+
+.biz-sidebar-nav .biz-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--biz-radius-sm);
+    color: var(--biz-gray-600);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--biz-transition);
+    position: relative;
+}
+
+.biz-sidebar-nav .biz-nav-link i {
+    font-size: 1.15rem;
+    width: 22px;
+    text-align: center;
+    color: var(--biz-gray-400);
+    transition: var(--biz-transition);
+}
+
+.biz-sidebar-nav .biz-nav-link:hover {
+    background-color: var(--biz-gray-100);
+    color: var(--biz-dark);
+}
+
+.biz-sidebar-nav .biz-nav-link:hover i {
+    color: var(--biz-primary);
+}
+
+.biz-sidebar-nav .biz-nav-link.active {
+    background-color: var(--biz-primary-light);
+    color: var(--biz-primary);
+    font-weight: 600;
+}
+
+.biz-sidebar-nav .biz-nav-link.active i {
+    color: var(--biz-primary);
+}
+
+.biz-sidebar-nav .biz-nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: -0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 24px;
+    background-color: var(--biz-primary);
+    border-radius: 0 3px 3px 0;
+}
+
+/* Sidebar Footer */
+.biz-sidebar-footer {
+    padding: 1rem 0.75rem;
+    border-top: 1px solid var(--biz-gray-200);
+}
+
+.biz-sidebar-footer .biz-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: var(--biz-radius-sm);
+    text-decoration: none;
+    color: var(--biz-gray-600);
+    transition: var(--biz-transition);
+}
+
+.biz-sidebar-footer .biz-user-info:hover {
+    background-color: var(--biz-gray-100);
+}
+
+.biz-sidebar-footer .biz-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--biz-primary);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.biz-sidebar-footer .biz-user-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.biz-sidebar-footer .biz-user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--biz-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.biz-sidebar-footer .biz-user-role {
+    font-size: 0.72rem;
+    color: var(--biz-gray-400);
+}
+
+.biz-sidebar-footer .biz-chevron {
+    font-size: 0.8rem;
+    color: var(--biz-gray-400);
+}
+
+/* Main Content Area */
+.biz-main {
+    margin-left: var(--biz-sidebar-width);
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Top Header Bar */
+.biz-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid var(--biz-gray-200);
+    padding: 0 2rem;
+    min-height: var(--biz-header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -2rem -2rem 2rem -2rem;
+}
+
+.biz-topbar .biz-page-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--biz-dark);
+    margin: 0;
+}
+
+.biz-topbar .biz-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.biz-topbar .biz-btn-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--biz-gray-200);
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--biz-gray-500);
+    transition: var(--biz-transition);
+    position: relative;
+    text-decoration: none;
+}
+
+.biz-topbar .biz-btn-icon:hover {
+    background-color: var(--biz-gray-100);
+    color: var(--biz-dark);
+    border-color: var(--biz-gray-300);
+}
+
+.biz-topbar .biz-btn-icon .biz-notification-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--biz-primary);
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+}
+
+/* Dashboard Content */
+.biz-content {
+    padding: 2rem;
+}
+
+/* ================================================================
+   3. ALERTS
+   ================================================================ */
+.biz-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--biz-radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.biz-alert i {
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.biz-alert-success {
+    background-color: var(--biz-success-light);
+    color: var(--biz-success);
+    border: 1px solid #b8e6cc;
+}
+
+.biz-alert-error {
+    background-color: var(--biz-danger-light);
+    color: var(--biz-danger);
+    border: 1px solid #f5c2c7;
+}
+
+/* ================================================================
+   4. STAT CARDS
+   ================================================================ */
+
+/* --- Stats Grid Container --- */
+.biz-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* --- Individual Stat Card --- */
+.biz-stat-card {
+    background-color: #ffffff;
+    border: 1px solid var(--biz-gray-200);
+    border-radius: var(--biz-radius);
+    padding: 1.5rem 1.5rem 1.75rem;
+    transition: var(--biz-transition);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.biz-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: var(--biz-radius) var(--biz-radius) 0 0;
+    opacity: 0;
+    transition: var(--biz-transition);
+}
+
+.biz-stat-card:nth-child(1)::before {
+    background: linear-gradient(90deg, var(--biz-primary), #6abf15);
+}
+
+.biz-stat-card:nth-child(2)::before {
+    background: linear-gradient(90deg, var(--biz-secondary), #7aa085);
+}
+
+.biz-stat-card:nth-child(3)::before {
+    background: linear-gradient(90deg, var(--biz-success), #2ecc71);
+}
+
+.biz-stat-card:nth-child(4)::before {
+    background: linear-gradient(90deg, var(--biz-danger), #ff6b7a);
+}
+
+.biz-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--biz-shadow-lg);
+    border-color: transparent;
+}
+
+.biz-stat-card:hover::before {
+    opacity: 1;
+}
+
+/* --- Card Top Row: Icon + Trend Indicator --- */
+.biz-stat-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.biz-stat-card .biz-stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+    transition: var(--biz-transition);
+}
+
+.biz-stat-card:hover .biz-stat-icon {
+    transform: scale(1.08);
+}
+
+.biz-stat-card .biz-stat-icon.bg-biz-primary-light {
+    background-color: var(--biz-primary-light);
+    color: var(--biz-primary);
+}
+
+.biz-stat-card .biz-stat-icon.bg-biz-secondary-light {
+    background-color: var(--biz-secondary-light);
+    color: var(--biz-secondary);
+}
+
+.biz-stat-card .biz-stat-icon.bg-biz-success-light {
+    background-color: var(--biz-success-light);
+    color: var(--biz-success);
+}
+
+.biz-stat-card .biz-stat-icon.bg-biz-danger-light {
+    background-color: var(--biz-danger-light);
+    color: var(--biz-danger);
+}
+
+/* --- Trend Badge (optional) --- */
+.biz-stat-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.biz-stat-trend.up {
+    background-color: var(--biz-success-light);
+    color: var(--biz-success);
+}
+
+.biz-stat-trend.down {
+    background-color: var(--biz-danger-light);
+    color: var(--biz-danger);
+}
+
+.biz-stat-trend.neutral {
+    background-color: var(--biz-gray-100);
+    color: var(--biz-gray-500);
+}
+
+/* --- Card Content --- */
+.biz-stat-card .biz-stat-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--biz-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+}
+
+.biz-stat-card .biz-stat-value {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--biz-dark);
+    line-height: 1.2;
+}
+
+/* --- Subtle Divider --- */
+.biz-stat-divider {
+    height: 1px;
+    background-color: var(--biz-gray-100);
+    margin: 0.9rem 0 0.65rem;
+}
+
+/* --- Card Footer (optional micro text) --- */
+.biz-stat-footer {
+    font-size: 0.75rem;
+    color: var(--biz-gray-400);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: auto;
+}
+
+.biz-stat-footer i {
+    font-size: 0.7rem;
+}
+
+/* ================================================================
+   5. WELCOME BANNER
+   ================================================================ */
+.biz-banner-wrapper {
+    margin-bottom: 2rem;
+}
+
+.biz-banner {
+    background: linear-gradient(135deg, var(--biz-primary) 0%, #5a9e0a 50%, var(--biz-secondary) 100%);
+    border-radius: var(--biz-radius);
+    padding: 2rem 2.25rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.biz-banner::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.biz-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    right: 10%;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.biz-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.biz-banner-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.35rem;
+}
+
+.biz-banner-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+}
+
+.biz-btn-success {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.35rem;
+    border-radius: var(--biz-radius-sm);
+    background-color: #ffffff;
+    color: var(--biz-primary);
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: none;
+    text-decoration: none;
+    transition: var(--biz-transition);
+    cursor: pointer;
+}
+
+.biz-btn-success:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--biz-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ================================================================
+   5. CONTENT CARDS
+   ================================================================ */
+.biz-card {
+    background-color: #ffffff;
+    border: 1px solid var(--biz-gray-200);
+    border-radius: var(--biz-radius);
+    overflow: hidden;
+    transition: var(--biz-transition);
+}
+
+.biz-card:hover {
+    box-shadow: var(--biz-shadow-md);
+}
+
+.biz-card .biz-card-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--biz-gray-200);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.biz-card .biz-card-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--biz-dark);
+    margin: 0;
+}
+
+.biz-card .biz-card-body {
+    padding: 1.5rem;
+}
+
+/* Quick Actions */
+.biz-quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.biz-quick-action-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--biz-radius-sm);
+    background-color: var(--biz-gray-50);
+    color: var(--biz-gray-600);
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--biz-transition);
+    border: 1px solid transparent;
+}
+
+.biz-quick-action-item i {
+    width: 20px;
+    text-align: center;
+    color: var(--biz-primary);
+    font-size: 1rem;
+}
+
+.biz-quick-action-item:hover {
+    background-color: var(--biz-primary-light);
+    color: var(--biz-primary);
+    border-color: var(--biz-primary);
+    transform: translateX(4px);
+}
+
+/* Text utilities */
+.biz-text-primary {
+    color: var(--biz-primary) !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.biz-text-primary:hover {
+    color: var(--biz-primary-dark) !important;
+    text-decoration: underline;
+}
+
+.biz-text-sm {
+    font-size: 0.85rem;
+}
+
+/* ================================================================
+   6. BUTTONS
+   ================================================================ */
+.biz-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--biz-radius-sm);
+    background-color: var(--biz-primary);
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: none;
+    text-decoration: none;
+    transition: var(--biz-transition);
+    cursor: pointer;
+}
+
+.biz-btn-primary:hover {
+    background-color: var(--biz-primary-dark);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: var(--biz-shadow-md);
+}
+
+.biz-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--biz-radius-sm);
+    background-color: var(--biz-secondary);
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: none;
+    text-decoration: none;
+    transition: var(--biz-transition);
+    cursor: pointer;
+}
+
+.biz-btn-secondary:hover {
+    background-color: var(--biz-secondary-dark);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: var(--biz-shadow-md);
+}
+
+.biz-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--biz-radius-sm);
+    background-color: transparent;
+    color: var(--biz-primary);
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: 1.5px solid var(--biz-primary);
+    text-decoration: none;
+    transition: var(--biz-transition);
+    cursor: pointer;
+}
+
+.biz-btn-outline:hover {
+    background-color: var(--biz-primary);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* ================================================================
+   7. SIDEBAR TOGGLE (Mobile)
+   ================================================================ */
+.biz-sidebar-toggle {
+    display: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--biz-gray-200);
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+    color: var(--biz-gray-500);
+    cursor: pointer;
+    transition: var(--biz-transition);
+}
+
+.biz-sidebar-toggle:hover {
+    background-color: var(--biz-gray-100);
+    color: var(--biz-dark);
+}
+
+/* Sidebar Overlay */
+.biz-sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1035;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.biz-sidebar-overlay.show {
+    opacity: 1;
+}
+
+/* ================================================================
+   8. RESPONSIVE
+   ================================================================ */
+@media (max-width: 1199.98px) {
+    .biz-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .biz-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .biz-sidebar.show {
+        transform: translateX(0);
+    }
+
+    .biz-main {
+        margin-left: 0;
+    }
+
+    .biz-sidebar-toggle {
+        display: flex;
+    }
+
+    .biz-sidebar-overlay {
+        display: block;
+        pointer-events: none;
+    }
+
+    .biz-sidebar-overlay.show {
+        pointer-events: auto;
+    }
+
+    .biz-banner-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .biz-content {
+        padding: 1.25rem;
+    }
+
+    .biz-topbar {
+        padding: 0 1.25rem;
+    }
+
+    .biz-stat-card .biz-stat-value {
+        font-size: 1.4rem;
+    }
+
+    .biz-main {
+        padding: 1rem;
+    }
+
+    .biz-topbar {
+        margin: -1rem -1rem 1.5rem -1rem;
+        padding: 0 1rem;
+    }
+
+    .biz-stats-grid {
+        gap: 1rem;
+    }
+
+    .biz-banner {
+        padding: 1.5rem;
+    }
+
+    .biz-banner-title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .biz-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .biz-content {
+        padding: 1rem;
+    }
+
+    .biz-topbar .biz-page-title {
+        font-size: 1rem;
+    }
+
+    .biz-card .biz-card-header,
+    .biz-card .biz-card-body {
+        padding: 1rem;
+    }
+
+    .biz-stat-card {
+        padding: 1rem;
+    }
+
+    .biz-stat-card .biz-stat-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+
+    .biz-stat-card .biz-stat-value {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .biz-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

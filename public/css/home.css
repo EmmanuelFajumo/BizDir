@@ -1,0 +1,763 @@
+/* ================================================================
+   BizDir - Business Directory Homepage Styles
+   Author: BizDir Team
+   Version: 1.0.0
+   ================================================================ */
+
+/* ================================================================
+   TABLE OF CONTENTS
+   1. CSS Variables & Root
+   2. Base & Typography
+   3. Utility Classes
+   4. Navigation
+   5. Hero Section
+   6. Categories
+   7. Featured Businesses
+   8. Why Choose Us
+   9. How It Works
+   10. Statistics
+   11. Testimonials
+   12. Pricing
+   13. CTA Banner
+   14. Blog Posts
+   15. Newsletter
+   16. Footer
+   17. Back to Top
+   18. Animations
+   19. Media Queries
+   ================================================================ */
+
+/* ================================================================
+   1. CSS VARIABLES & ROOT
+   ================================================================ */
+:root {
+    /* Color Palette */
+    --color-primary: #0D6EFD;
+    --color-secondary: #198754;
+    --color-accent: #FFC107;
+    --color-background: #F8F9FA;
+    --color-dark: #212529;
+    --color-light: #FFFFFF;
+    --color-text: #212529;
+    --color-text-muted: #6C757D;
+    --color-border: #DEE2E6;
+
+    /* Typography */
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Spacing */
+    --section-padding: 5rem;
+    --section-padding-mobile: 3rem;
+    --card-radius: 1rem;
+    --btn-radius: 50rem;
+
+    /* Transitions */
+    --transition-base: all 0.3s ease;
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ================================================================
+   2. BASE & TYPOGRAPHY
+   ================================================================ */
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: var(--font-heading);
+    line-height: 1.3;
+    color: var(--color-dark);
+}
+
+/* Links */
+a {
+    color: var(--color-primary);
+    transition: var(--transition-base);
+}
+
+a:hover {
+    color: #0b5ed7;
+}
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+
+/* ================================================================
+   3. UTILITY CLASSES
+   ================================================================ */
+
+/* Section padding */
+.section-padding {
+    padding-top: var(--section-padding);
+    padding-bottom: var(--section-padding);
+}
+
+/* Min height 75 viewport */
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+/* Background opacity utilities */
+.bg-opacity-5 {
+    --bs-bg-opacity: 0.05;
+}
+
+.bg-opacity-10 {
+    --bs-bg-opacity: 0.1;
+}
+
+/* Border opacity */
+.border-white-10 {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Opacity helpers */
+.opacity-90 {
+    opacity: 0.9;
+}
+
+.opacity-25 {
+    opacity: 0.25;
+}
+
+/* Transition hover */
+.transition-hover {
+    transition: var(--transition-smooth);
+}
+
+.transition-hover:hover {
+    transform: translateY(-4px);
+}
+
+/* Rounded start 5 (Bootstrap 5.3+ helper) */
+.rounded-start-5 {
+    border-start-start-radius: 3rem !important;
+    border-end-start-radius: 3rem !important;
+}
+
+/* ================================================================
+   4. NAVIGATION
+   ================================================================ */
+
+#mainNav {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    transition: var(--transition-smooth);
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#mainNav .navbar-brand {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+#mainNav .navbar-brand i {
+    font-size: 1.75rem;
+}
+
+#mainNav .nav-link {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: var(--transition-base);
+}
+
+#mainNav .nav-link:hover,
+#mainNav .nav-link.active {
+    color: var(--color-primary);
+}
+
+#mainNav .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+    height: 2px;
+    background-color: var(--color-primary);
+    border-radius: 1px;
+}
+
+/* Navbar scrolled state */
+#mainNav.navbar-scrolled {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ================================================================
+   5. HERO SECTION
+   ================================================================ */
+
+.hero-section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    background: linear-gradient(180deg, #F0F4FF 0%, var(--color-light) 100%);
+}
+
+.hero-section h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+.hero-section .lead {
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* Search wrapper */
+.search-wrapper {
+    border: 1px solid rgba(13, 110, 253, 0.1);
+}
+
+.search-wrapper .form-control,
+.search-wrapper .form-select {
+    border: none;
+    background: transparent;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.search-wrapper .form-control:focus,
+.search-wrapper .form-select:focus {
+    box-shadow: none;
+    background: transparent;
+}
+
+.search-wrapper .input-group-text {
+    border: none;
+}
+
+/* Hero illustration */
+.hero-illustration img {
+    max-height: 500px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Floating badges */
+.floating-badge {
+    animation: float 3s ease-in-out infinite;
+    min-width: 160px;
+}
+
+.floating-badge:nth-child(2) {
+    animation-delay: 1.5s;
+}
+
+/* Popular tags */
+.badge.bg-light {
+    transition: var(--transition-base);
+}
+
+.badge.bg-light:hover {
+    background-color: var(--color-primary) !important;
+    color: var(--color-light) !important;
+}
+
+/* ================================================================
+   6. CATEGORIES
+   ================================================================ */
+
+.category-card .card {
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.category-card .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(13, 110, 253, 0.1);
+    background-color: var(--color-primary) !important;
+}
+
+.category-card .card:hover .category-icon i {
+    color: var(--color-light) !important;
+}
+
+.category-card .card:hover h6 {
+    color: var(--color-light) !important;
+}
+
+.category-card .card:hover small {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.category-icon i {
+    transition: var(--transition-base);
+}
+
+/* ================================================================
+   7. FEATURED BUSINESSES
+   ================================================================ */
+
+.business-card {
+    transition: var(--transition-smooth);
+}
+
+.business-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+.business-img {
+    height: 200px;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+}
+
+.business-card:hover .business-img {
+    transform: scale(1.05);
+}
+
+.business-card .card-body {
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================================================
+   8. WHY CHOOSE US
+   ================================================================ */
+
+.feature-card {
+    transition: var(--transition-smooth);
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.feature-icon {
+    transition: var(--transition-base);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+/* ================================================================
+   9. HOW IT WORKS
+   ================================================================ */
+
+.step-number {
+    transition: var(--transition-smooth);
+    box-shadow: 0 8px 25px rgba(13, 110, 253, 0.3);
+}
+
+.step-number:hover {
+    transform: scale(1.1);
+}
+
+/* ================================================================
+   10. STATISTICS
+   ================================================================ */
+
+.stat-item {
+    padding: 1.5rem;
+}
+
+.stat-item i {
+    opacity: 0.9;
+}
+
+.counter {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+}
+
+/* ================================================================
+   11. TESTIMONIALS
+   ================================================================ */
+
+.testimonial-card {
+    position: relative;
+}
+
+.testimonial-card .bi-quote {
+    line-height: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 50px;
+    height: 50px;
+    background-size: 50%;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    opacity: 0.4;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+}
+
+/* ================================================================
+   12. PRICING
+   ================================================================ */
+
+.pricing-card {
+    transition: var(--transition-smooth);
+}
+
+.pricing-card:hover {
+    transform: translateY(-6px);
+}
+
+/* ================================================================
+   13. CTA BANNER
+   ================================================================ */
+
+.cta-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #0b5ed7 100%) !important;
+}
+
+.cta-section .btn-light {
+    transition: var(--transition-smooth);
+}
+
+.cta-section .btn-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* ================================================================
+   14. BLOG POSTS
+   ================================================================ */
+
+.blog-card {
+    transition: var(--transition-smooth);
+}
+
+.blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+.blog-card img {
+    height: 220px;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+}
+
+.blog-card:hover img {
+    transform: scale(1.05);
+}
+
+.blog-card .card-body {
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================================================
+   15. NEWSLETTER
+   ================================================================ */
+
+.newsletter-card {
+    border: 1px solid rgba(13, 110, 253, 0.08);
+}
+
+.newsletter-card .form-control {
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--btn-radius);
+    border: 2px solid var(--color-border);
+    transition: var(--transition-base);
+}
+
+.newsletter-card .form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+/* ================================================================
+   16. FOOTER
+   ================================================================ */
+
+footer a.hover-white:hover {
+    color: var(--color-light) !important;
+}
+
+footer .btn-outline-light {
+    transition: var(--transition-base);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer .btn-outline-light:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-light);
+}
+
+footer hr {
+    opacity: 0.1;
+}
+
+/* ================================================================
+   17. BACK TO TOP
+   ================================================================ */
+
+#backToTop {
+    transition: var(--transition-smooth);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+#backToTop.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#backToTop:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(13, 110, 253, 0.4);
+}
+
+/* ================================================================
+   18. ANIMATIONS
+   ================================================================ */
+
+/* Float animation for hero badges */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Fade in up animation for scroll reveal */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade in left animation */
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Fade in right animation */
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Scale in animation */
+.scale-in {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ================================================================
+   19. MEDIA QUERIES
+   ================================================================ */
+
+/* Tablet and below */
+@media (max-width: 991.98px) {
+    :root {
+        --section-padding: 4rem;
+    }
+
+    .hero-section {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .hero-section .display-4 {
+        font-size: 2.2rem;
+    }
+
+    #mainNav .navbar-collapse {
+        background-color: var(--color-light);
+        padding: 1rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 0.5rem;
+    }
+
+    #mainNav .nav-link.active::after {
+        display: none;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+    :root {
+        --section-padding: var(--section-padding-mobile);
+    }
+
+    .hero-section h1 {
+        font-size: 1.75rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+
+    .search-wrapper {
+        padding: 1rem !important;
+    }
+
+    .search-wrapper .btn {
+        padding: 0.75rem;
+    }
+
+    .display-5 {
+        font-size: 2.2rem;
+    }
+
+    .display-6 {
+        font-size: 1.75rem;
+    }
+
+    .testimonial-card {
+        padding: 2rem !important;
+    }
+
+    .testimonial-card .lead {
+        font-size: 1rem;
+    }
+
+    .newsletter-card {
+        padding: 2rem !important;
+    }
+
+    .stat-item {
+        padding: 1rem;
+    }
+
+    .stat-item .display-5 {
+        font-size: 1.8rem;
+    }
+
+    .floating-badge {
+        display: none !important;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        display: none;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 575.98px) {
+    .hero-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .category-card .card {
+        padding: 1rem !important;
+    }
+
+    .category-card .fs-1 {
+        font-size: 1.5rem !important;
+    }
+
+    .category-card h6 {
+        font-size: 0.8rem;
+    }
+
+    .business-card .card-body {
+        padding: 1.25rem !important;
+    }
+
+    .pricing-card .card-body {
+        padding: 1.5rem !important;
+    }
+
+    .pricing-card .display-4 {
+        font-size: 2rem;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
