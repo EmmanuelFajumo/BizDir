@@ -44,7 +44,7 @@ Route::post('/create_listing', [BusinessController::class, 'storee'])->middlewar
 Route::get('/my_businesses', [BusinessController::class, 'myBusinesses'])->middleware(['auth', 'verified'])->name('my_businesses');
 Route::get('/my_businesses/{id}', [BusinessController::class, 'viewBusiness'])->middleware(['auth', 'verified'])->name('view_business');
 
-
+  
 
 //Business Owner Edit Businesses
 Route::get('/edit_business/{id}', [BusinessController::class, 'editBusiness'])->middleware(['auth', 'verified'])->name('edit_business');
