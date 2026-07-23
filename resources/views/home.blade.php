@@ -49,12 +49,12 @@
         </div>
     </nav>
 
+
     <!-- HERO - Full-Width Banner -->
-    <section class="hero-section" aria-label="Hero" style="background-image: url('https://picsum.photos/seed/bizdir-hero/1920/900');">
+    <section class="hero-section" aria-label="Hero" style="background-image: url(/assets/hero.jfif);">
         <div class="hero-content">
             <div class="hero-badge">
-                <i class="bi bi-star-fill"></i>
-                Trusted by 10,000+ businesses
+                Trusted by 5000+ businesses
             </div>
             <h1 class="hero-title">
                 Discover the Best<br>
@@ -73,7 +73,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="search-box">
-                        <form class="row g-2 g-lg-3 align-items-center">
+                        <form  method="POST" action={{ route('browse') }} class="row g-2 g-lg-3 align-items-center">
+                            @csrf
                             <div class="col-12 col-md-5">
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-search text-muted"></i></span>
@@ -83,18 +84,17 @@
                             <div class="col-6 col-md-3">
                                 <select class="form-select">
                                     <option selected disabled>Category</option>
-                                    <option>Restaurants</option>
-                                    <option>Hotels</option>
-                                    <option>Hospitals</option>
-                                    <option>Real Estate</option>
+                                    @foreach ($categories as $category)
+                                    <option value={{ $category->id }}>{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-6 col-md-2">
                                 <select class="form-select">
                                     <option selected disabled>Location</option>
-                                    <option>Lagos</option>
-                                    <option>Abuja</option>
-                                    <option>Port Harcourt</option>
+                                    @foreach ($states as $state)
+                                    <option value={{ $state->id }}> {{ $state->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-12 col-md-2">
@@ -122,8 +122,8 @@
     <section class="section-padding categories-section" aria-label="Categories">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="section-label"><i class="bi bi-grid"></i> Categories</span>
-                <h2 class="section-title">Browse by <span class="gradient-text">Category</span></h2>
+                <span class="section-label">Categories</span>
+                <h2 class="section-title">Browse by Category</h2>
                 <p class="section-subtitle mx-auto">Explore thousands of businesses across popular categories.</p>
             </div>
 
@@ -174,59 +174,76 @@
             </div>
 
             <div class="row g-4">
-                @php
-                    $businesses = [
-                        ['img' => 'biz1', 'logo' => 'logo1', 'name' => 'The Golden Dragon', 'category' => 'Restaurant', 'location' => 'Lagos', 'rating' => 4.5, 'reviews' => 128, 'status' => 'open', 'desc' => 'Authentic Chinese cuisine with a modern twist.'],
-                        ['img' => 'biz2', 'logo' => 'logo2', 'name' => 'Grand Plaza Hotel', 'category' => 'Hotel', 'location' => 'Abuja', 'rating' => 5.0, 'reviews' => 342, 'status' => 'open', 'desc' => 'Luxury accommodations with world-class amenities.'],
-                        ['img' => 'biz3', 'logo' => 'logo3', 'name' => 'City Medical Center', 'category' => 'Hospital', 'location' => 'Port Harcourt', 'rating' => 4.0, 'reviews' => 89, 'status' => 'closed', 'desc' => 'Comprehensive healthcare services available 24/7.'],
-                    ];
-                @endphp
-                @foreach ($businesses as $biz)
+                @forelse ($businesses as $biz)
+                    @php
+                        $rating = round($biz->reviews_avg_rating ?? 0, 1);
+                        $reviewCount = $biz->reviews_count ?? 0;
+                    @endphp
                     <div class="col-md-6 col-lg-4 fade-in-up" style="animation-delay: {{ $loop->index * 0.1 }}s">
                         <div class="business-card">
                             <div class="position-relative overflow-hidden">
-                                <img src="https://picsum.photos/seed/{{ $biz['img'] }}/600/300" alt="{{ $biz['name'] }}" class="card-img-top" loading="lazy">
+                                @if ($biz->cover_image)
+                                    <img src="{{ Storage::url($biz->cover_image) }}" class="card-img-top" alt="{{ $biz->name }}" loading="lazy" style="height:200px;object-fit:cover;">
+                                @else
+                                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:200px;">
+                                        <i class="bi bi-building text-muted" style="font-size:3rem;"></i>
+                                    </div>
+                                @endif
                                 <span class="badge-verified position-absolute top-0 end-0 m-3">
                                     <i class="bi bi-check-circle-fill me-1"></i>Verified
-                                </span>
-                                <span class="badge-{{ $biz['status'] === 'open' ? 'open' : 'closed' }} position-absolute top-0 start-0 m-3">
-                                    <i class="bi bi-clock me-1"></i>{{ $biz['status'] === 'open' ? 'Open Now' : 'Closed Now' }}
                                 </span>
                             </div>
                             <div class="card-body p-4">
                                 <div class="d-flex align-items-start gap-3 mb-3">
-                                    <img src="https://picsum.photos/seed/{{ $biz['logo'] }}/60/60" alt="Logo" class="logo-sm" loading="lazy">
+                                    @if ($biz->logo)
+                                        <img src="{{ Storage::url($biz->logo) }}" alt="{{ $biz->name }} logo" class="logo-sm" loading="lazy">
+                                    @else
+                                        <div class="logo-sm d-flex align-items-center justify-content-center bg-light rounded-circle">
+                                            <i class="bi bi-building text-muted"></i>
+                                        </div>
+                                    @endif
                                     <div class="flex-grow-1">
-                                        <h6 class="fw-bold mb-1">{{ $biz['name'] }}</h6>
-                                        <div class="d-flex gap-2 small text-muted">
-                                            <span><i class="bi bi-shop me-1"></i>{{ $biz['category'] }}</span>
-                                            <span><i class="bi bi-geo-alt me-1"></i>{{ $biz['location'] }}</span>
+                                        <h6 class="fw-bold mb-1">{{ $biz->name }}</h6>
+                                        <div class="d-flex gap-2 small text-muted flex-wrap">
+                                            @if ($biz->category)
+                                                <span><i class="bi bi-shop me-1"></i>{{ $biz->category->name }}</span>
+                                            @endif
+                                            @if ($biz->state)
+                                                <span><i class="bi bi-geo-alt me-1"></i>{{ $biz->state->name }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 mb-3">
                                     <div class="stars">
                                         @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= floor($biz['rating']))
+                                            @if ($i <= floor($rating))
                                                 <i class="bi bi-star-fill"></i>
-                                            @elseif ($i - $biz['rating'] < 1)
+                                            @elseif ($i - $rating < 1 && $rating > 0)
                                                 <i class="bi bi-star-half"></i>
                                             @else
                                                 <i class="bi bi-star"></i>
                                             @endif
                                         @endfor
                                     </div>
-                                    <span class="rating-number">{{ $biz['rating'] }}</span>
-                                    <span class="review-count">({{ $biz['reviews'] }})</span>
+                                    <span class="rating-number">{{ $rating > 0 ? $rating : 'N/A' }}</span>
+                                    <span class="review-count">({{ $reviewCount }} {{ Str::plural('review', $reviewCount) }})</span>
                                 </div>
-                                <p class="text-muted small mb-3">{{ $biz['desc'] }}</p>
-                                <a href="#" class="btn btn-gradient w-100 rounded-pill">
+                                @if ($biz->description)
+                                    <p class="text-muted small mb-3">{{ Str::limit($biz->description, 100) }}</p>
+                                @endif
+                                <a href="{{ route('view', $biz->id) }}" class="btn btn-gradient w-100 rounded-pill">
                                     View Details <i class="bi bi-arrow-right ms-1"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-building text-muted" style="font-size:3rem;"></i>
+                        <p class="text-muted mt-3">No featured businesses yet. Check back soon!</p>
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>

@@ -209,8 +209,8 @@
                                             @php
                                                 $hourEntry = $openingHours[$day] ?? null;
                                                 $isClosed = old('opening_hours.' . $loop->index . '.is_closed', $hourEntry ? ($hourEntry->is_closed ? '1' : '') : '');
-                                                $opensAt = old('opening_hours.' . $loop->index . '.opens_at', $hourEntry ? $hourEntry->opens_at : '');
-                                                $closesAt = old('opening_hours.' . $loop->index . '.closes_at', $hourEntry ? $hourEntry->closes_at : '');
+                                                $opensAt = old('opening_hours.' . $loop->index . '.opens_at', $hourEntry && $hourEntry->opens_at ? \Carbon\Carbon::parse($hourEntry->opens_at)->format('H:i') : '');
+                                                $closesAt = old('opening_hours.' . $loop->index . '.closes_at', $hourEntry && $hourEntry->closes_at ? \Carbon\Carbon::parse($hourEntry->closes_at)->format('H:i') : '');
                                             @endphp
                                             <tr>
                                                 <td class="fw-semibold">{{ $day }}</td>

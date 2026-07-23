@@ -1,12 +1,20 @@
 <?php
 
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+
+
+//Guests
+
+//Home
+Route::get('/',  [SiteController::class, 'cat_state'])->name('home');
+//search
+Route::get('/browse',  [SiteController::class, 'browseBusinesses'])->name('browse');
+Route::post('/browse',  [SiteController::class, 'browseBusinesses'])->name('browse');
+
 
 
 Route::get('/dashboard', function () {
@@ -44,11 +52,15 @@ Route::post('/create_listing', [BusinessController::class, 'storee'])->middlewar
 Route::get('/my_businesses', [BusinessController::class, 'myBusinesses'])->middleware(['auth', 'verified'])->name('my_businesses');
 Route::get('/my_businesses/{id}', [BusinessController::class, 'viewBusiness'])->middleware(['auth', 'verified'])->name('view_business');
 
-  
+
 
 //Business Owner Edit Businesses
 Route::get('/edit_business/{id}', [BusinessController::class, 'editBusiness'])->middleware(['auth', 'verified'])->name('edit_business');
 
 Route::post('/edit_business/{id}', [BusinessController::class, 'updateBusiness'])->middleware(['auth', 'verified'])->name('business.updateBusiness');
+
+
+//View Business
+Route::get('/view_business/{id}', [SiteController::class, 'view_business'])->name('view');
 
 require __DIR__.'/auth.php';

@@ -44,7 +44,7 @@
     --font-body: 'Inter', sans-serif;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #447604 0%, #6abf08 100%);
+    --gradient-primary:  #6abf08;
     --gradient-primary-soft: linear-gradient(135deg, #edf5e6 0%, #d4edc9 100%);
     --gradient-secondary: linear-gradient(135deg, #47624F 0%, #6a8f74 100%);
     --gradient-dark: linear-gradient(135deg, #1e293b 0%, #334155 100%);

@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class BusinessController extends Controller
 {
-    /**
-     * Show the form for creating a new business listing.
-     */
+    
     public function create()
     {
         $categories = Category::where('is_active', true)->orderBy('name')->get();
