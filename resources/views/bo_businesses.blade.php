@@ -169,8 +169,8 @@
                                         <!-- Logo -->
                                         <td>
                                             @if($business->logo)
-                                                <img src="{{ asset('storage/' . $business->logo) }}" 
-                                                     alt="{{ $business->name }}" 
+                                                <img src="{{ asset('storage/' . $business->logo) }}"
+                                                     alt="{{ $business->name }}"
                                                      class="rounded-circle"
                                                      width="45" height="45"
                                                      style="object-fit: cover;">
@@ -302,7 +302,7 @@
                         <h3 class="biz-card-title">Recent Reviews</h3>
                         <a href="" class="biz-text-primary biz-text-sm">View All</a>
                     </div>
-                   
+
                 </div>
             </div>
 
@@ -366,7 +366,7 @@
                 // Create a form dynamically and submit it
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = `/businesses/${businessId}`;
+                form.action = `/delete_business/${businessId}`;
                 form.style.display = 'none';
 
                 const csrfInput = document.createElement('input');

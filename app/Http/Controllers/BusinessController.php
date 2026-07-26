@@ -264,4 +264,18 @@ class BusinessController extends Controller
         return redirect()->route('bo_dashboard')
             ->with('success', 'Your business has been updated successfully!');
     }
+
+
+
+    public function deleteBusiness($id)
+    {
+        $business = Business::findOrFail($id);
+        if ($business->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+        $business->delete();
+        return redirect()->route('bo_dashboard')
+            ->with('success', 'Your business has been deleted successfully!');
+    }
+    
 }

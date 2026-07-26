@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;  //trait - Allows you to create fake users for testing.
 use Illuminate\Foundation\Auth\User as Authenticatable; //gives User model abilities like login, logout, etc
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -75,6 +75,18 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    public function isSuperAdmin()
+    {
+        return $this->role === 'super_admin';
+    }
+
+    public function isAdminOrSuperAdmin()
+    {
+        return in_array($this->role, [
+            'admin',
+            'super_admin'
+        ]);
+    }
     public function isBusinessOwner()
     {
         return $this->role === 'business_owner';

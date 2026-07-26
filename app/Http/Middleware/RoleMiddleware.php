@@ -10,15 +10,20 @@ class RoleMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-         if(auth()->user()->role !== $role)
-        {
-            abort(403);
+        // Check if user is logged in
+        if (!auth()->check()) {
+            abort(403, 'You must be logged in.');
         }
+
+
+        // Check user's role
+        if (!in_array(auth()->user()->role, $roles)) {
+            abort(403, 'You do not have permission to access this resource.');
+        }
+
 
         return $next($request);
     }

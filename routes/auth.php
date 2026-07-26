@@ -10,7 +10,27 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminBusinessController;
+use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminReportController;
+use App\Http\Controllers\Admin\AdminReviewController;
+use App\Http\Controllers\Admin\SuperAdminController;
 
+
+
+
+use App\Http\Controllers\ReviewController;
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Guest Routes (unauthenticated users)
+|--------------------------------------------------------------------------
+*/
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -35,6 +55,11 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes (verified users)
+|--------------------------------------------------------------------------
+*/
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
@@ -56,13 +81,63 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('review');
+
+    Route::get('/manage-admin', [SuperAdminController::class, 'index'])->name('admin.manage_admin');
 });
 
-Route::middleware(['auth','role:admin'])
-->prefix('admin')
-->group(function(){
+/*
+|--------------------------------------------------------------------------
+| Admin Routes (admin or super_admin role)
+|--------------------------------------------------------------------------
+|
+| These routes are prefixed with /admin and require either admin
+| or super_admin role via the 'role:admin,super_admin' middleware.
+|
+*/
+Route::prefix('admin')
+    ->middleware(['auth', 'role:admin,super_admin'])
+    ->group(function () {
 
-    Route::get('/dashboard',
-        [AdminController::class,'index']);
+        // Admin dashboard
+        Route::get('/dashboard',
+            [AdminDashboardController::class, 'index'])
+            ->name('admin.dashboard');
 
-});
+        // Resource controllers for admin management
+        Route::resource('users', AdminUserController::class);
+        Route::patch('users/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('admin.users.toggle-status');
+        Route::resource('businesses', AdminBusinessController::class);
+        Route::patch('businesses/{business}/toggle-status', [AdminBusinessController::class, 'toggleStatus'])->name('admin.business.toggle-status');
+        Route::resource('categories', AdminCategoryController::class);
+        Route::resource('reports', AdminReportController::class);
+        Route::resource('reviews', AdminReviewController::class);
+        Route::patch('reviews/{review}/approve', [AdminReviewController::class, 'approve'])->name('admin.reviews.approve');
+        Route::patch('reviews/{review}/reject', [AdminReviewController::class, 'reject'])->name('admin.reviews.reject');
+        Route::patch('reviews/{review}/destroy', [AdminReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+        Route::patch('admins/{id}/update', [SuperAdminController::class, 'update'])->name('admin.admins.update');
+
+        // Custom route: verify a business (PATCH /admin/businesses/{id}/verify)
+        Route::patch('businesses/{business}/verify',
+            [AdminBusinessController::class, 'verify'])
+            ->name('admin.businesses.verify');
+
+    });
+
+/*
+|--------------------------------------------------------------------------
+| Super Admin Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('super-admin')
+    ->middleware(['auth', 'role:super_admin'])
+    ->group(function () {
+
+        Route::resource(
+            'admins',
+            SuperAdminController::class
+        );
+
+    });

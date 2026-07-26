@@ -9,19 +9,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\User;
+use App\Models\Business;
+
+
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
-     */   
+     */
     public function create(): View
     {
         return view('auth.login');
     }
 
-    /** 
+    /**
      * Handle an incoming authentication request.
+     *
+     * After authentication, redirect the user to their appropriate
+     * dashboard based on their role (business owner, regular user,
+     * admin, or super admin).
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -30,15 +37,21 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = $request->user();
-        if($user->isBusinessOwner()){
+
+        // Redirect based on user role
+        if ($user->isBusinessOwner()) {
             return redirect()->intended(route('bo_dashboard', absolute: false));
-        } else {
+        } elseif ($user->isUser()) {
             return redirect()->intended(route('dashboard', absolute: false));
+        } elseif ($user->isAdminOrSuperAdmin()) {
+            return redirect()->intended(route('admin_dashboard', absolute: false));
+        }else{
+            return redirect()->intended(route('home', absolute: false));
         }
     }
 
     /**
-     * Destroy an authenticated session.
+     * Destroy an authenticated session (logout).
      */
     public function destroy(Request $request): RedirectResponse
     {

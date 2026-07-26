@@ -376,6 +376,39 @@
                             <div class="empty-reviews">
                                 <i class="bi bi-chat-square"></i>
                                 <p class="mb-0">No reviews yet. Be the first to leave a review!</p>
+                                @if(auth()->check())
+                                    <form method="POST" action="{{ route('review') }}">
+                                        @csrf
+                                        <input type="hidden" name="business_id" value="{{ $b->id }}">
+
+                                        <div class="mb-3">
+                                            <label>Rating</label>
+                                            <select name="rating" class="form-select">
+                                                <option value="5">5 Stars</option>
+                                                <option value="4">4 Stars</option>
+                                                <option value="3">3 Stars</option>
+                                                <option value="2">2 Stars</option>
+                                                <option value="1">1 Star</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>Title (optional)</label>
+                                        <input name="title" class="form-control">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>Comment</label>
+                                            <textarea name="body" class="form-control" rows="3"></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                                    </form>
+
+                                @else
+                                    <a href="{{ route('login') }}" class="btn btn-email">Login to Leave a Review</a>
+                                @endif
+
                             </div>
                         @endif
                     </div>
