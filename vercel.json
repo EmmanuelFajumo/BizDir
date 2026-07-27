@@ -1,12 +1,16 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
-    "installCommand": "composer install --no-dev --optimize-autoloader && npm install",
-    "buildCommand": "npm run build && mkdir -p public/storage && php artisan storage:link --force || true",
+
+    "installCommand": "php -v && composer install --no-dev --optimize-autoloader && npm install",
+
+    "buildCommand": "npm run build",
+
     "functions": {
         "api/lambda.php": {
             "runtime": "vercel-php@0.7.4"
         }
     },
+
     "routes": [
         {
             "src": "/build/(.*)",
@@ -22,4 +26,3 @@
         }
     ]
 }
-
