@@ -1,15 +1,25 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
-    "outputDirectory": "public",
-    "installCommand": "composer install --no-dev --optimize-autoloader",
-    "buildCommand": "npm install && npm run build",
+    "installCommand": "composer install --no-dev --optimize-autoloader && npm install",
+    "buildCommand": "npm run build && mkdir -p public/storage && php artisan storage:link --force || true",
     "functions": {
         "api/lambda.php": {
             "runtime": "vercel-php@0.7.4"
         }
     },
-    "rewrites": [
-        {"source": "/(.*)", "destination": "/api/lambda.php"}
+    "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+            "dest": "/public/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/lambda.php"
+        }
     ]
 }
 
