@@ -2,7 +2,7 @@ name: Deploy to Vercel
 
 on:
   push:
-    branches: [main]
+    branches: [deployment]
 
 jobs:
   deploy:
@@ -19,27 +19,39 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, pdo, pdo_mysql, bcmath
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
       - name: Install Composer Dependencies
         run: composer install --no-ansi --no-interaction --no-progress --prefer-dist
 
-      - name: Generate APP_KEY
-        run: php artisan key:generate
+      - name: Create .env file
+        run: |
+          cat > .env << EOF
+          APP_ENV=production
+          APP_KEY=${{ secrets.APP_KEY }}
+          APP_DEBUG=false
+          APP_URL=https://your-app-url.vercel.app
+          DB_CONNECTION=mysql
+          DB_HOST=${{ secrets.DB_HOST }}
+          DB_PORT=3306
+          DB_DATABASE=${{ secrets.DB_DATABASE }}
+          DB_USERNAME=${{ secrets.DB_USERNAME }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          MYSQL_ATTR_SSL_CA=/etc/ssl/certs/ca-certificates.crt
+          EOF
+
+      - name: Debug .env (hide password)
+        run: |
+          echo "=== .env file contents (password hidden) ==="
+          cat .env | grep -v PASSWORD
+          echo "============================================"
+
+      - name: Clear config cache
+        run: php artisan config:clear
 
       - name: Run Migrations
         run: php artisan migrate --force --verbose
-        env:
-          APP_ENV: production
-          APP_KEY: ${{ secrets.APP_KEY }}
-          DB_CONNECTION: mysql
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: 3306
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MYSQL_ATTR_SSL_CA: /etc/ssl/certs/ca-certificates.crt
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
 
       - name: Deploy to Vercel
         run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
