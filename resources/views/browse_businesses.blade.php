@@ -268,7 +268,7 @@
                                     </div>
                                     <p class="text-muted small mb-3">{{ Str::limit($business->description, 100) }}</p>
                                     <div class="d-flex gap-2">
-                                        <a href="#" class="btn btn-gradient w-100 rounded-pill btn-sm">
+                                        <a href="{{ route('view', ['id' => $business->id]) }}" class="btn btn-gradient w-100 rounded-pill btn-sm">
                                             View Details <i class="bi bi-arrow-right ms-1"></i>
                                         </a>
                                         <a href="tel:{{ $business->phone }}" class="btn btn-gradient-outline rounded-pill btn-sm" style="flex-shrink: 0;">
