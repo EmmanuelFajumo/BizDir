@@ -9,7 +9,7 @@ use App\Models\Lga;
 use App\Models\OpeningHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BusinessController extends Controller
 {
@@ -54,12 +54,20 @@ class BusinessController extends Controller
 
         // Handle logo upload
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('businesses/logos', 'public');
+            $uploadedLogo = Cloudinary::uploadApi()->upload($request->file('logo')->getRealPath(), [
+                'folder' => 'businesses/logos',
+            ]);
+            $validated['logo'] = $uploadedLogo['secure_url'];
+            $validated['logo_public_id'] = $uploadedLogo['public_id'];
         }
 
         // Handle cover image upload
         if ($request->hasFile('cover_image')) {
-            $validated['cover_image'] = $request->file('cover_image')->store('businesses/covers', 'public');
+            $uploadedCover = Cloudinary::uploadApi()->upload($request->file('cover_image')->getRealPath(), [
+                'folder' => 'businesses/covers',
+            ]);
+            $validated['cover_image'] = $uploadedCover['secure_url'];
+            $validated['cover_image_public_id'] = $uploadedCover['public_id'];
         }
 
         $validated['user_id'] = Auth::id();
@@ -115,12 +123,20 @@ class BusinessController extends Controller
 
         // Handle logo upload
         if ($request->hasFile('logo')) {
-            $validated['logo'] = $request->file('logo')->store('businesses/logos', 'public');
+            $uploadedLogo = Cloudinary::uploadApi()->upload($request->file('logo')->getRealPath(), [
+                'folder' => 'businesses/logos',
+            ]);
+            $validated['logo'] = $uploadedLogo['secure_url'];
+            $validated['logo_public_id'] = $uploadedLogo['public_id'];
         }
 
         // Handle cover image upload
         if ($request->hasFile('cover_image')) {
-            $validated['cover_image'] = $request->file('cover_image')->store('businesses/covers', 'public');
+            $uploadedCover = Cloudinary::uploadApi()->upload($request->file('cover_image')->getRealPath(), [
+                'folder' => 'businesses/covers',
+            ]);
+            $validated['cover_image'] = $uploadedCover['secure_url'];
+            $validated['cover_image_public_id'] = $uploadedCover['public_id'];
         }
 
         $validated['user_id'] = Auth::id();
@@ -229,20 +245,26 @@ class BusinessController extends Controller
 
         // Handle logo upload
         if ($request->hasFile('logo')) {
-            // Delete old logo
-            if ($business->logo) {
-                Storage::disk('public')->delete($business->logo);
+            if (!empty($business->logo_public_id)) {
+                $this->deleteCloudinaryAsset($business->logo_public_id);
             }
-            $validated['logo'] = $request->file('logo')->store('businesses/logos', 'public');
+            $uploadedLogo = Cloudinary::uploadApi()->upload($request->file('logo')->getRealPath(), [
+                'folder' => 'businesses/logos',
+            ]);
+            $validated['logo'] = $uploadedLogo['secure_url'];
+            $validated['logo_public_id'] = $uploadedLogo['public_id'];
         }
 
         // Handle cover image upload
         if ($request->hasFile('cover_image')) {
-            // Delete old cover image
-            if ($business->cover_image) {
-                Storage::disk('public')->delete($business->cover_image);
+            if (!empty($business->cover_image_public_id)) {
+                $this->deleteCloudinaryAsset($business->cover_image_public_id);
             }
-            $validated['cover_image'] = $request->file('cover_image')->store('businesses/covers', 'public');
+            $uploadedCover = Cloudinary::uploadApi()->upload($request->file('cover_image')->getRealPath(), [
+                'folder' => 'businesses/covers',
+            ]);
+            $validated['cover_image'] = $uploadedCover['secure_url'];
+            $validated['cover_image_public_id'] = $uploadedCover['public_id'];
         }
 
         $business->update($validated);
@@ -273,9 +295,38 @@ class BusinessController extends Controller
         if ($business->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }
+
+        // Clean up Cloudinary assets
+        if (!empty($business->logo_public_id)) {
+            $this->deleteCloudinaryAsset($business->logo_public_id);
+        }
+        if (!empty($business->cover_image_public_id)) {
+            $this->deleteCloudinaryAsset($business->cover_image_public_id);
+        }
+
         $business->delete();
         return redirect()->route('bo_dashboard')
             ->with('success', 'Your business has been deleted successfully!');
     }
-    
+
+    /**
+     * Delete an asset from Cloudinary using its public ID or URL.
+     */
+    protected function deleteCloudinaryAsset(?string $identifier): void
+    {
+        if (empty($identifier)) {
+            return;
+        }
+
+        $publicId = $identifier;
+        if (preg_match('/\/upload\/(?:v\d+\/)?(.+?)\.[a-zA-Z0-9]+$/', $identifier, $matches)) {
+            $publicId = $matches[1];
+        }
+
+        try {
+            Cloudinary::uploadApi()->destroy($publicId);
+        } catch (\Throwable $e) {
+            // Ignore if asset is missing or error occurs during cleanup
+        }
+    }
 }

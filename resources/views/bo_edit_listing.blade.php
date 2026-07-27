@@ -523,7 +523,7 @@
                                      class="mx-auto mb-3 d-flex align-items-center justify-content-center"
                                      style="width: 150px; height: 150px; border: 2px dashed var(--biz-gray-300); border-radius: var(--biz-radius); background-color: var(--biz-gray-50); overflow: hidden;">
                                     @if ($business->logo)
-                                        <img src="{{ Storage::url($business->logo) }}" alt="Business Logo" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="{{ $business->logo_url }}" alt="Business Logo" style="width: 100%; height: 100%; object-fit: cover;">
                                     @else
                                         <i class="fas fa-store" style="font-size: 3rem; color: var(--biz-gray-300);"></i>
                                     @endif
@@ -560,7 +560,7 @@
                                      class="mx-auto mb-3 d-flex align-items-center justify-content-center"
                                      style="width: 100%; height: 180px; border: 2px dashed var(--biz-gray-300); border-radius: var(--biz-radius-sm); background-color: var(--biz-gray-50); overflow: hidden;">
                                     @if ($business->cover_image)
-                                        <img src="{{ Storage::url($business->cover_image) }}" alt="Cover Image" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="{{ $business->cover_image_url }}" alt="Cover Image" style="width: 100%; height: 100%; object-fit: cover;">
                                     @else
                                         <i class="fas fa-mountain" style="font-size: 3rem; color: var(--biz-gray-300);"></i>
                                     @endif

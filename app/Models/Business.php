@@ -19,7 +19,9 @@ class Business extends Model
         'name',
         'description',
         'logo',
+        'logo_public_id',
         'cover_image',
+        'cover_image_public_id',
         'phone',
         'whatsapp',
         'facebook',
@@ -36,6 +38,26 @@ class Business extends Model
         'is_verified',
         'is_featured'
     ];
+
+    public function getLogoUrlAttribute()
+    {
+        if (!$this->logo) {
+            return null;
+        }
+        return (str_starts_with($this->logo, 'http://') || str_starts_with($this->logo, 'https://'))
+            ? $this->logo
+            : asset('storage/' . $this->logo);
+    }
+
+    public function getCoverImageUrlAttribute()
+    {
+        if (!$this->cover_image) {
+            return null;
+        }
+        return (str_starts_with($this->cover_image, 'http://') || str_starts_with($this->cover_image, 'https://'))
+            ? $this->cover_image
+            : asset('storage/' . $this->cover_image);
+    }
 
     public function owner()
     {

@@ -320,7 +320,7 @@
                             <div class="business-card">
                                 <div class="position-relative overflow-hidden">
                                     @if ($biz->cover_image)
-                                        <img src="{{ Storage::url($biz->cover_image) }}" class="card-img-top" alt="{{ $biz->name }}" loading="lazy">
+                                        <img src="{{ $biz->cover_image_url }}" class="card-img-top" alt="{{ $biz->name }}" loading="lazy">
                                     @else
                                         <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:200px;">
                                             <i class="bi bi-building text-muted" style="font-size:3rem;"></i>
@@ -333,7 +333,7 @@
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-start gap-3 mb-3">
                                         @if ($biz->logo)
-                                            <img src="{{ Storage::url($biz->logo) }}" alt="{{ $biz->name }} logo" class="logo-sm" loading="lazy">
+                                            <img src="{{ $biz->logo_url }}" alt="{{ $biz->name }} logo" class="logo-sm" loading="lazy">
                                         @else
                                             <div class="logo-sm-placeholder">
                                                 <i class="bi bi-building"></i>

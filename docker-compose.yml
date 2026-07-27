@@ -1,0 +1,83 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: "${UID:-1000}"
+        GID: "${GID:-1000}"
+    container_name: bizdir-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-80}:80"
+    env_file:
+      - .env.docker
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE:-bizdir}
+      - DB_USERNAME=${DB_USERNAME:-bizdir_user}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SESSION_DRIVER=file
+      - QUEUE_CONNECTION=database
+      - CACHE_STORE=file
+      - RUN_MIGRATIONS=true
+    volumes:
+      - app-storage:/var/www/storage
+      - app-logs:/var/log
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - bizdir-network
+
+  db:
+    image: mysql:8.0
+    container_name: bizdir-db
+    restart: unless-stopped
+    ports:
+      - "${DB_PORT_EXTERNAL:-3307}:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-bizdir}
+      MYSQL_USER: ${DB_USERNAME:-bizdir_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_secret}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-root_secret}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - bizdir-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: bizdir-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT_EXTERNAL:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - bizdir-network
+
+volumes:
+  app-storage:
+  app-logs:
+  db-data:
+  redis-data:
+
+networks:
+  bizdir-network:
+    driver: bridge

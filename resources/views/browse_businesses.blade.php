@@ -241,7 +241,7 @@
                             <div class="business-card">
                                 <div class="position-relative overflow-hidden">
                                     @if ($business->cover_image)
-                                        <img src="{{ Storage::url($business->cover_image) }}" alt="{{ $business->name }}" class="card-img-top" loading="lazy">
+                                        <img src="{{ $business->cover_image_url }}" alt="{{ $business->name }}" class="card-img-top" loading="lazy">
                                     @else
                                         <img src="https://picsum.photos/seed/biz-{{ $business->id }}/600/300" alt="{{ $business->name }}" class="card-img-top" loading="lazy">
                                     @endif
@@ -252,7 +252,7 @@
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-start gap-3 mb-3">
                                         @if ($business->logo)
-                                            <img src="{{ Storage::url($business->logo) }}" alt="Logo" class="logo-sm" loading="lazy">
+                                            <img src="{{ $business->logo_url }}" alt="Logo" class="logo-sm" loading="lazy">
                                         @else
                                             <div class="logo-sm d-flex align-items-center justify-content-center" style="background: var(--biz-primary-light);">
                                                 <i class="bi bi-building" style="color: var(--biz-primary);"></i>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -54,7 +54,7 @@
     {{-- COVER IMAGE --}}
     <div class="biz-cover" aria-label="Business cover image">
         @if ($b->cover_image)
-            <img src="{{ asset('storage/' . $business_det->cover_image) }}" alt="{{ $b->name }} cover">
+            <img src="{{ $b->cover_image_url }}" alt="{{ $b->name }} cover">
             <div class="biz-cover-overlay"></div>
         @else
             <div class="biz-cover-placeholder"><i class="bi bi-building"></i></div>
@@ -66,7 +66,7 @@
         <div class="container">
             <div class="d-flex align-items-end gap-4 flex-wrap">
                 @if ($b->logo)
-                    <img src="{{ asset('storage/' . $b->logo) }}" alt="{{ $b->name }} logo" class="biz-logo">
+                    <img src="{{ $b->logo_url }}" alt="{{ $b->name }} logo" class="biz-logo">
                 @else
                     <div class="biz-logo-placeholder" aria-hidden="true"><i class="bi bi-building"></i></div>
                 @endif

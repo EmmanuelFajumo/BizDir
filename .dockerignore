@@ -1,0 +1,12 @@
+.git
+.gitignore
+node_modules
+vendor
+public/build
+public/hot
+storage/*.key
+.env
+.env.*
+.dockerignore
+Dockerfile
+docker-compose.yml

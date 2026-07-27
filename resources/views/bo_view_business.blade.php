@@ -53,7 +53,7 @@
                 <!-- Cover Image -->
                 <div class="position-relative" style="height: 250px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px 12px 0 0; overflow: hidden;">
                     @if($business->cover_image)
-                        <img src="{{ asset('storage/' . $business->cover_image) }}" 
+                        <img src="{{ $business->cover_image_url }}" 
                              alt="{{ $business->name }} cover" 
                              style="width: 100%; height: 100%; object-fit: cover;">
                     @endif
@@ -97,7 +97,7 @@
                                 <!-- Logo -->
                                 <div class="flex-shrink-0" style="margin-top: -60px;">
                                     @if($business->logo)
-                                        <img src="{{ asset('storage/' . $business->logo) }}" 
+                                        <img src="{{ $business->logo_url }}" 
                                              alt="{{ $business->name }}" 
                                              class="rounded-circle border border-4 border-white shadow"
                                              width="100" height="100"

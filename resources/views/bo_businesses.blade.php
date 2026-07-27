@@ -169,7 +169,7 @@
                                         <!-- Logo -->
                                         <td>
                                             @if($business->logo)
-                                                <img src="{{ asset('storage/' . $business->logo) }}"
+                                                <img src="{{ $business->logo_url }}"
                                                      alt="{{ $business->name }}"
                                                      class="rounded-circle"
                                                      width="45" height="45"

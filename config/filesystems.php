@@ -60,6 +60,15 @@ return [
             'report' => false,
         ],
 
+        'cloudinary' => [
+            'driver' => 'cloudinary',
+            'url' => env('CLOUDINARY_URL'),
+            'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+            'key' => env('CLOUDINARY_API_KEY', env('CLOUDINARY_KEY')),
+            'secret' => env('CLOUDINARY_API_SECRET', env('CLOUDINARY_SECRET')),
+            'secure' => true,
+        ],
+
     ],
 
     /*
@@ -75,10 +84,6 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-    ],
-
-    'cloudinary' => [
-        'driver' => 'cloudinary',
     ],
 
 ];
